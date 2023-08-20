@@ -1,11 +1,20 @@
-// Pin assignments
-const int ledPin = LED_BUILTIN;    // LED pin for built-in light
-const int buttonPin = 2;           // Pin for the push button
-const int dotDuration = 200;       // Duration of a dot in milliseconds
+// Name: Aditya
+// Student I'D: 2210994754
+//task2.1
+
+
+const int ledPin = LED_BUILTIN;    
+const int buttonPin = 2;           
+const int dotDuration = 210;       // Duration of a dot in milliseconds
 
 // Morse code representation of the name "ADITYA"
 const char* morseCode[] = {
-  ".-", "-..", "..-", ".-", "-.--", ".-"
+  ".-",  //A
+   "-..", //D
+    "..-", //I
+     ".-", //T
+      "-.--", //Y
+       ".-" //A
 };
 
 int currentCharIndex = 0;  // Index of the current character in Morse code
@@ -20,43 +29,50 @@ void loop() {
   if (digitalRead(buttonPin) == LOW) {
     // Button press detected
     if (!blinking) {
-      startBlinking();            // Start blinking the Morse code
+      BlinkingStart();            // Start blinking according to Morse code
     } else {
       currentCharIndex = 0;
-      stopBlinking();             // Stop blinking and reset
+      BlinkingStop();             // Stop blinking and reset
     }
-    delay(200);                   // Add debounce delay
+    delay(200);                   
   }
   
-  if (blinking) {
-    char morseChar = morseCode[currentCharIndex][0];
-    if (morseChar == '.') {
-      digitalWrite(ledPin, HIGH);
-      delay(dotDuration);
-      digitalWrite(ledPin, LOW);
-      delay(dotDuration);
-    } else if (morseChar == '-') {
-      digitalWrite(ledPin, HIGH);
-      delay(dotDuration * 3);
-      digitalWrite(ledPin, LOW);
-      delay(dotDuration);
+  if (blinking) 
+    {
+        char morseChar = morseCode[currentCharIndex][0];
+        if (morseChar == '.') {
+        digitalWrite(ledPin, HIGH);
+        delay(dotDuration);
+        digitalWrite(ledPin, LOW);
+        delay(dotDuration);
+    } 
+    
+    else if (morseChar == '-') 
+    {
+        digitalWrite(ledPin, HIGH);
+        delay(dotDuration * 3);
+        digitalWrite(ledPin, LOW);
+        delay(dotDuration);
     }
 
     currentCharIndex++;
-    if (morseCode[currentCharIndex] == NULL) {
-      currentCharIndex = 0;
-      stopBlinking();
-      delay(1000);                // Pause between name blinkings
-    }
+    if (morseCode[currentCharIndex] == NULL) 
+      {
+        currentCharIndex = 0;
+        BlinkingStop();
+        delay(1000);                // Pause between name blinkings
+      }
   }
 }
 
-void startBlinking() {
+void BlinkingStart() 
+{
   blinking = true;
   currentCharIndex = 0;
 }
 
-void stopBlinking() {
+void BlinkingStop() 
+{
   blinking = false;
   digitalWrite(ledPin, LOW);
 }
